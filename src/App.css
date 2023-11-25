@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+  background: #aaaaaa;
+
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #aaaaaa;
+  padding: 20px;
+  color: black;
+}
+
+.App-button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
