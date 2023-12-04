@@ -104,7 +104,7 @@ const DropdownsDinamicos = () => {
 
 <br></br>
 
-<Link to="/poner direccion de la matriz aqui">
+<Link to="/tabla">
       <button className="App-button">Llenar</button>
     </Link>
 <br></br>

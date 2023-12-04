@@ -5,6 +5,7 @@ import './App.css';
 
 import Pagina1 from './components/inicioSesion';
 import Pagina2 from './components/seleccionMatriz';
+import Pagina3 from './components/tabla';
 
 function App() {
   const [mostrarContenidoPrincipal, setMostrarContenidoPrincipal] = useState(true);
@@ -47,6 +48,10 @@ function App() {
             <Route
               path="/seleccionMatriz"
               element={<Pagina2 onToggle={() => setMostrarContenidoPrincipal(false)} />}
+            />
+            <Route
+              path="/tabla"
+              element={<Pagina3 onToggle={() => setMostrarContenidoPrincipal(false)} />}
             />
           </Routes>
         </header>
