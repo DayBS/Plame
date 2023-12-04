@@ -11,6 +11,7 @@ function App() {
 
   return (
     <Router>
+    <div className="AppWithBackground">
       <div className="App">
         <header className="App-header">
           <Routes>
@@ -21,7 +22,12 @@ function App() {
                   {mostrarContenidoPrincipal && (
                     <div>
                       <img src={logo} className="App-logo" alt="logo" />
-                      <h1>Bienvenido </h1>
+                      <h1>Matriz de Calidad del Plan de Mejora </h1>
+                      <div className='cuadrosTexto'>
+                        Bienvenido. Esta aplicacion permite revisar y llenar una matriz dedicada 
+                        a la calidad del plan de mejora de las distintas carreras de la 
+                        Universidad Mayor de San Simon.
+                      </div>
                       <Link to="/inicioSesion">
                         <button className="App-button">Inicio de Sesion</button>
                       </Link>
@@ -31,6 +37,7 @@ function App() {
                     </div>
                   )}
                 </div>
+
               }
             />
             <Route
@@ -43,6 +50,7 @@ function App() {
             />
           </Routes>
         </header>
+      </div>
       </div>
     </Router>
   );
