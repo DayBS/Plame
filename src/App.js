@@ -22,7 +22,7 @@ function App() {
                   {mostrarContenidoPrincipal && (
                     <div>
                       <img src={logo} className="App-logo" alt="logo" />
-                      <h1>Matriz de Calidad del Plan de Mejora </h1>
+                      <h1 className='App-title'>Matriz de Calidad del Plan de Mejora </h1>
                       <div className='cuadrosTexto'>
                         Bienvenido. Esta aplicacion permite revisar y llenar una matriz dedicada 
                         a la calidad del plan de mejora de las distintas carreras de la 
@@ -34,6 +34,9 @@ function App() {
                       <Link to="/seleccionMatriz">
                         <button className="App-button">Seleccion de matrices</button>
                       </Link>
+                      <div className='cuadrosContacto'>
+                        **Para solicitar una cuenta, por favor contactarse con la unidad responsable.
+                      </div>
                     </div>
                   )}
                 </div>

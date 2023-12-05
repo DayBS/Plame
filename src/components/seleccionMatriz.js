@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import estilos from '../styles/seleccionMatriz.css'
 const DropdownsDinamicos = () => {
   const opcionesFacultades = ['Facultad Politécnica del Alto', 'Facultad de Ciencias Sociales', 'Facultad de Odontologia', 'Facultad de Medicina', 
                               'Facultad de Humanidades y Ciencias de la Educación' , 'Facultad de Ciencias y Tecnología', 'Facultad de Ciencias Jurídicas y Políticas', 
@@ -57,14 +57,12 @@ const DropdownsDinamicos = () => {
   };
 
   return (
-    <div>
-      <Link to="/">
-      <button className="App-button">Atras</button>
-    </Link>
+    <div className="dropdown-container">
+      
 <br></br>
       <label>
         Selección de Facultad:
-        <select value={seleccionFacultades} onChange={handleFacultadesChange}>
+        <select className="select" value={seleccionFacultades} onChange={handleFacultadesChange}>
           <option value="">Seleccionar</option>
           {opcionesFacultades.map((opcion) => (
             <option key={opcion} value={opcion}>
@@ -78,7 +76,7 @@ const DropdownsDinamicos = () => {
         <>
         <label>
           Selección Carrera:
-          <select value={seleccionCarreras} onChange={handleCarrerasChange}>
+          <select className="select"  value={seleccionCarreras} onChange={handleCarrerasChange}>
             <option value="">Seleccionar</option>
             {opcionesCarreras[seleccionFacultades].map((opcion) => (
               <option key={opcion} value={opcion}>
@@ -90,7 +88,7 @@ const DropdownsDinamicos = () => {
 
         <label>
             Tipo de Evaluación:
-            <select value={seleccionArea} onChange={handleAreaChange}>
+            <select className="select" value={seleccionArea} onChange={handleAreaChange}>
               <option value="">Seleccionar</option>
               {opcionesArea.map((opcion) => (
                 <option key={opcion} value={opcion}>
@@ -103,7 +101,9 @@ const DropdownsDinamicos = () => {
       )}
 
 <br></br>
-
+<Link to="/">
+      <button className="Atras-button">Atras</button>
+    </Link>
 <Link to="/poner direccion de la matriz aqui">
       <button className="App-button">Llenar</button>
     </Link>
