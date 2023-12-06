@@ -27,7 +27,7 @@ body, html {
   width: 100%;
   max-width: 640px; 
   box-sizing: border-box;
-  margin-left: 550px;
+  margin-left: 100px;
 }
 
 .App-button {

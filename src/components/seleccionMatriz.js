@@ -75,7 +75,7 @@ const DropdownsDinamicos = () => {
       {seleccionFacultades && (
         <>
         <label>
-          Selección Carrera:
+          Selección Carrera:x
           <select className="select"  value={seleccionCarreras} onChange={handleCarrerasChange}>
             <option value="">Seleccionar</option>
             {opcionesCarreras[seleccionFacultades].map((opcion) => (
