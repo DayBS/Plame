@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-ro
 import logo from './logo.png';
 import './App.css';
 
-import Pagina1 from './components/inicioSesion';
-import Pagina2 from './components/seleccionMatriz';
+import InicioSesion from './components/inicioSesion';
+import SeleccionMatriz from './components/seleccionMatriz';
+import VerMatrices from './components/verMatrices';
 
 function App() {
   const [mostrarContenidoPrincipal, setMostrarContenidoPrincipal] = useState(true);
@@ -37,12 +38,13 @@ function App() {
                           a la calidad del plan de mejora de las distintas carreras de la
                           Universidad Mayor de San Simón.
                         </div>
+                        <Link to="/verMatrices">
+                          <button className="App-button">Invitado<br/> (Solo podra revisar las matrices)</button>
+                        </Link>
                         <Link to="/inicioSesion">
-                          <button className="App-button">Inicio de Sesión</button>
+                          <button className="App-button">Editor<br/>(Podra llenar matrices, se necesita cuenta)</button>
                         </Link>
-                        <Link to="/seleccionMatriz">
-                          <button className="App-button">Selección de Matrices</button>
-                        </Link>
+                       
                         <div className='cuadrosContacto'>
                           **Para solicitar una cuenta, por favor contactarse con la unidad responsable.
                         </div>
@@ -55,7 +57,7 @@ function App() {
               <Route
                 path="/inicioSesion"
                 element={
-                  <Pagina1
+                  <InicioSesion
                     onToggle={() => setMostrarContenidoPrincipal(false)}
                     onLogin={handleLogin}
                   />
@@ -64,7 +66,16 @@ function App() {
               <Route
                 path="/seleccionMatriz"
                 element={
-                  <Pagina2
+                  <SeleccionMatriz
+                    onToggle={() => setMostrarContenidoPrincipal(false)}
+                    onLogin={handleLogin}
+                  />
+                }
+              />
+              <Route
+                path="/verMatrices"
+                element={
+                  <VerMatrices
                     onToggle={() => setMostrarContenidoPrincipal(false)}
                     onLogin={handleLogin}
                   />

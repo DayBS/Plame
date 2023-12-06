@@ -71,7 +71,7 @@ const DropdownsDinamicos = () => {
           ))}
         </select>
       </label>
-
+<br/>
       {seleccionFacultades && (
         <>
         <label>
@@ -85,7 +85,7 @@ const DropdownsDinamicos = () => {
             ))}
           </select>
         </label>
-
+        <br/>
         <label>
             Tipo de Evaluación:
             <select className="select" value={seleccionArea} onChange={handleAreaChange}>
