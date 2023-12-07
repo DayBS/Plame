@@ -1,5 +1,11 @@
 /* tabla.css */
 
+.tabla{
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
 table, th, td {
     border:1px solid black;
     border-spacing: 0;
@@ -30,3 +36,4 @@ table {
     width: 30px;
     align-content: center;
   }
+  

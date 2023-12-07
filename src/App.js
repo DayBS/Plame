@@ -6,6 +6,7 @@ import './App.css';
 import InicioSesion from './components/inicioSesion';
 import SeleccionMatriz from './components/seleccionMatriz';
 import VerMatrices from './components/verMatrices';
+import Tabla from './components/tabla';
 
 function App() {
   const [mostrarContenidoPrincipal, setMostrarContenidoPrincipal] = useState(true);
@@ -76,6 +77,15 @@ function App() {
                 path="/verMatrices"
                 element={
                   <VerMatrices
+                    onToggle={() => setMostrarContenidoPrincipal(false)}
+                    onLogin={handleLogin}
+                  />
+                }
+              />
+              <Route
+                path="/tabla"
+                element={
+                  <Tabla
                     onToggle={() => setMostrarContenidoPrincipal(false)}
                     onLogin={handleLogin}
                   />

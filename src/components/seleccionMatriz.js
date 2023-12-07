@@ -40,6 +40,7 @@ const DropdownsDinamicos = () => {
   const [seleccionCarreras, setSeleccionCarreras] = useState('');
   const [seleccionArea, setSeleccionArea] = useState('');
 
+  
   const handleFacultadesChange = (e) => {
     const seleccion = e.target.value;
     setSeleccionFacultades(seleccion);
@@ -55,6 +56,8 @@ const DropdownsDinamicos = () => {
     const seleccion = e.target.value;
     setSeleccionArea(seleccion);
   };
+
+  const isBotonHabilitado = seleccionFacultades !== '' && seleccionCarreras !== '' && seleccionArea !== '';
 
   return (
     <div className="dropdown-container">
@@ -105,7 +108,7 @@ const DropdownsDinamicos = () => {
       <button className="Atras-button">Atras</button>
     </Link>
 <Link to="/tabla">
-      <button className="App-button">Llenar</button>
+      <button className="App-button" disabled={!isBotonHabilitado}>Llenar</button>
     </Link>
 <br></br>
     </div>

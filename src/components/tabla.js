@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './tabla.css';
+import '../styles/tabla.css';
 
 const Tabla = () => {
   const [plam, setPlam] = useState({
@@ -47,7 +47,7 @@ const Tabla = () => {
   const range = (n) => Array.from({ length: n }, (_, i) => i);
 
   return (
-    <div>
+    <div className='tabla'>
       <Link to="/">
         <button className="App-button">Atras</button>
       </Link>
