@@ -1,0 +1,372 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './tabla.css';
+
+const Tabla = () => {
+  const [plam, setPlam] = useState({
+    matriz: [
+      ["DIMENSIÓN", "OBJETIVO", "PRODUCTO", "N°", "INDICADOR", "VALIDEZ INDICADOR"],
+      ["NORMAS JURÍDICAS INSTITUCIONALES", [""], [""], [""], [""], [""]],
+      ["MISIÓN Y OBJETIVO", [""], [""], [""], [""], [""]],
+      ["CURRÍCULO", [""], [""], [""], [""], [""], [""]],
+      ["ADMINISTRACIÓN Y GESTIÓN ACADÉMICA", [""], [""], [""], [""], [""]],
+      ["DOCENTES", [""], [""], [""], [""], [""]],
+      ["ESTUDIANTES", [""], [""], [""], [""], [""]],
+      ["INVESTIGACIÓN E INTERACCIÓN SOCIAL", [""], [""], [""], [""], [""]],
+      ["RECURSOS EDUCATIVOS", [""], [""], [""], [""], [""]],
+      ["ADMINISTRATIVOS FINANCIEROS", [""], [""], [""], [""], [""]],
+      ["INFRAESTRUCTURA", [""], [""], [""], [""], [""]],
+    ],
+    dinamicos: Array.from({ length: 11 }, () => 1),
+  });
+
+  const addObj = (dim) => {
+    const newDinamicos = [...plam.dinamicos];
+    newDinamicos[dim] += 1;
+
+    const newMatriz = [...plam.matriz];
+    for (let i = 1; i <= 5; i++) {
+      newMatriz[dim][i].push("");
+    }
+
+    setPlam({ matriz: newMatriz, dinamicos: newDinamicos });
+  };
+
+  const subtractObj = (dim) => {
+    const newDinamicos = [...plam.dinamicos];
+    newDinamicos[dim] -= 1;
+
+    const newMatriz = [...plam.matriz];
+    for (let i = 1; i <= 5; i++) {
+      newMatriz[dim][i].pop();
+    }
+
+    setPlam({ matriz: newMatriz, dinamicos: newDinamicos });
+  };
+
+  const range = (n) => Array.from({ length: n }, (_, i) => i);
+
+  return (
+    <div>
+      <Link to="/">
+        <button className="App-button">Atras</button>
+      </Link>
+
+      <h2>Tabla</h2>
+
+      <table>
+        <thead>
+          <tr>
+            {plam.matriz[0].map((title, index) => (
+              <th key={index}>{title}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {range(plam.matriz[1][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[1]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[1] > 1 && (
+                    <button onClick={() => subtractObj(1)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[1][0]}</h3>
+                  <button onClick={() => addObj(1)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[1][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[1][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[2][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[2]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[2] > 1 && (
+                    <button onClick={() => subtractObj(2)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[2][0]}</h3>
+                  <button onClick={() => addObj(2)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[2][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[2][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[3][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[3]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[3] > 1 && (
+                    <button onClick={() => subtractObj(3)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[3][0]}</h3>
+                  <button onClick={() => addObj(3)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[3][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[3][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[4][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[4]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[4] > 1 && (
+                    <button onClick={() => subtractObj(4)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[4][0]}</h3>
+                  <button onClick={() => addObj(4)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[4][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[4][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[5][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[5]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[5] > 1 && (
+                    <button onClick={() => subtractObj(5)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[5][0]}</h3>
+                  <button onClick={() => addObj(5)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[5][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[5][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[6][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[6]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[6] > 1 && (
+                    <button onClick={() => subtractObj(6)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[6][0]}</h3>
+                  <button onClick={() => addObj(6)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[6][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[6][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[7][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[7]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[7] > 1 && (
+                    <button onClick={() => subtractObj(7)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[7][0]}</h3>
+                  <button onClick={() => addObj(7)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[7][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[7][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[8][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[8]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[8] > 1 && (
+                    <button onClick={() => subtractObj(8)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[8][0]}</h3>
+                  <button onClick={() => addObj(8)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[8][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[8][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[9][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[9]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[9] > 1 && (
+                    <button onClick={() => subtractObj(9)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[9][0]}</h3>
+                  <button onClick={() => addObj(9)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[9][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[9][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+          {range(plam.matriz[10][1].length).map((rowIndex) => (
+            <tr key={rowIndex}>
+              {rowIndex === 0 && (
+                <th rowSpan={plam.dinamicos[10]} style={{ backgroundColor: '#C6E5B1' }}>
+                  {plam.dinamicos[10] > 1 && (
+                    <button onClick={() => subtractObj(10)}>
+                      <img src="/rmbtn.png" alt="removearea" height="15" width="15" />
+                    </button>
+                  )}
+                  <h3>{plam.matriz[10][0]}</h3>
+                  <button onClick={() => addObj(10)}>
+                    <img src="/addbtn.png" alt="addarea" width="15" height="15" />
+                  </button>
+                </th>
+              )}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="text"
+                    value={plam.matriz[10][colIndex + 1][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[10][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Tabla;

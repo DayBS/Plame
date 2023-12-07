@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import estilos from '../styles/seleccionMatriz.css'
+
 const DropdownsDinamicos = () => {
   const opcionesFacultades = ['Facultad Politécnica del Alto', 'Facultad de Ciencias Sociales', 'Facultad de Odontologia', 'Facultad de Medicina', 
                               'Facultad de Humanidades y Ciencias de la Educación' , 'Facultad de Ciencias y Tecnología', 'Facultad de Ciencias Jurídicas y Políticas', 
@@ -57,12 +57,14 @@ const DropdownsDinamicos = () => {
   };
 
   return (
-    <div className="dropdown-container">
-      
+    <div>
+      <Link to="/">
+      <button className="App-button">Atras</button>
+    </Link>
 <br></br>
       <label>
         Selección de Facultad:
-        <select className="select" value={seleccionFacultades} onChange={handleFacultadesChange}>
+        <select value={seleccionFacultades} onChange={handleFacultadesChange}>
           <option value="">Seleccionar</option>
           {opcionesFacultades.map((opcion) => (
             <option key={opcion} value={opcion}>
@@ -71,12 +73,12 @@ const DropdownsDinamicos = () => {
           ))}
         </select>
       </label>
-<br/>
+
       {seleccionFacultades && (
         <>
         <label>
-          Selección Carrera:x
-          <select className="select"  value={seleccionCarreras} onChange={handleCarrerasChange}>
+          Selección Carrera:
+          <select value={seleccionCarreras} onChange={handleCarrerasChange}>
             <option value="">Seleccionar</option>
             {opcionesCarreras[seleccionFacultades].map((opcion) => (
               <option key={opcion} value={opcion}>
@@ -85,10 +87,10 @@ const DropdownsDinamicos = () => {
             ))}
           </select>
         </label>
-        <br/>
+
         <label>
             Tipo de Evaluación:
-            <select className="select" value={seleccionArea} onChange={handleAreaChange}>
+            <select value={seleccionArea} onChange={handleAreaChange}>
               <option value="">Seleccionar</option>
               {opcionesArea.map((opcion) => (
                 <option key={opcion} value={opcion}>
@@ -101,10 +103,8 @@ const DropdownsDinamicos = () => {
       )}
 
 <br></br>
-<Link to="/">
-      <button className="Atras-button">Atras</button>
-    </Link>
-<Link to="/poner direccion de la matriz aqui">
+
+<Link to="/tabla">
       <button className="App-button">Llenar</button>
     </Link>
 <br></br>
