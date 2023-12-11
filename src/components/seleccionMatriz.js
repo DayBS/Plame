@@ -69,10 +69,8 @@ const DropdownsDinamicos = () => {
         area: seleccionArea,
       };
 
-      // Convertir el objeto a cadena JSON y almacenarlo en localStorage
       localStorage.setItem('seleccion', JSON.stringify(seleccion));
     } else {
-      // Si falta alguna selección, puedes manejarlo aquí, por ejemplo, mostrar un mensaje de error
       console.log('Por favor, complete todas las selecciones.');
     }
   };
