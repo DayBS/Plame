@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/tabla.css';
 
@@ -17,8 +17,19 @@ const Tabla = () => {
       ["ADMINISTRATIVOS FINANCIEROS", [""], [""], [""], [""], [""]],
       ["INFRAESTRUCTURA", [""], [""], [""], [""], [""]],
     ],
-    dinamicos: Array.from({ length: 11 }, () => 1),
+    dinamicos: Array.from({ length: 11 }, () => 1)
   });
+
+  const [infoLocal, setInfoLocal] = useState({
+    facultad: '',
+    carrera: '',
+    area: '',
+  });
+
+  const [indiceFilas, setIndiceFilas] = useState(
+    // Establecer el estado inicial del índice de filas con la cantidad inicial de filas en la matriz
+    plam.matriz.slice(1).reduce((total, row) => total + row[1].length, 0)
+  );
 
   const addObj = (dim) => {
     const newDinamicos = [...plam.dinamicos];
@@ -30,6 +41,7 @@ const Tabla = () => {
     }
 
     setPlam({ matriz: newMatriz, dinamicos: newDinamicos });
+    setIndiceFilas(indiceFilas + 1);
   };
 
   const subtractObj = (dim) => {
@@ -42,9 +54,25 @@ const Tabla = () => {
     }
 
     setPlam({ matriz: newMatriz, dinamicos: newDinamicos });
+    setIndiceFilas(indiceFilas - 1);
   };
 
   const range = (n) => Array.from({ length: n }, (_, i) => i);
+
+  useEffect(() => {
+    // Recuperar información del localStorage
+    const storedSelection = JSON.parse(localStorage.getItem('seleccion'));
+
+    // Verificar si hay información almacenada
+    if (storedSelection) {
+      // Actualizar el estado con la información del localStorage
+      setInfoLocal({
+        facultad: storedSelection.facultad,
+        carrera: storedSelection.carrera,
+        area: storedSelection.area,
+      });
+    }
+  }, []);
 
   return (
     <div className='tabla'>
@@ -53,6 +81,9 @@ const Tabla = () => {
       </Link>
 
       <h2>Tabla</h2>
+      <h2>{infoLocal.facultad}</h2>
+      <h2>{infoLocal.carrera}</h2>
+      <h2>{infoLocal.area}</h2>
 
       <table>
         <thead>
@@ -65,7 +96,7 @@ const Tabla = () => {
         <tbody>
           {range(plam.matriz[1][1].length).map((rowIndex) => (
             <tr key={rowIndex}>
-              {rowIndex === 0 && (
+              {rowIndex === 0 && plam.matriz[1] && plam.matriz[1][0] && (
                 <th rowSpan={plam.dinamicos[1]} style={{ backgroundColor: '#C6E5B1' }}>
                   {plam.dinamicos[1] > 1 && (
                     <button onClick={() => subtractObj(1)}>

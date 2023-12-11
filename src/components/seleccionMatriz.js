@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import estilos from '../styles/seleccionMatriz.css'
+
 const DropdownsDinamicos = () => {
   const opcionesFacultades = ['Facultad Politécnica del Alto', 'Facultad de Ciencias Sociales', 'Facultad de Odontologia', 'Facultad de Medicina', 
                               'Facultad de Humanidades y Ciencias de la Educación' , 'Facultad de Ciencias y Tecnología', 'Facultad de Ciencias Jurídicas y Políticas', 
@@ -59,13 +59,33 @@ const DropdownsDinamicos = () => {
 
   const isBotonHabilitado = seleccionFacultades !== '' && seleccionCarreras !== '' && seleccionArea !== '';
 
+  const setLocalStorage = () => {
+    // Verificar si todas las selecciones están hechas
+    if (seleccionFacultades !== '' && seleccionCarreras !== '' && seleccionArea !== '') {
+      // Crear un objeto con la información seleccionada
+      const seleccion = {
+        facultad: seleccionFacultades,
+        carrera: seleccionCarreras,
+        area: seleccionArea,
+      };
+
+      // Convertir el objeto a cadena JSON y almacenarlo en localStorage
+      localStorage.setItem('seleccion', JSON.stringify(seleccion));
+    } else {
+      // Si falta alguna selección, puedes manejarlo aquí, por ejemplo, mostrar un mensaje de error
+      console.log('Por favor, complete todas las selecciones.');
+    }
+  };
+
   return (
-    <div className="dropdown-container">
-      
+    <div>
+      <Link to="/">
+      <button className="App-button">Atras</button>
+    </Link>
 <br></br>
       <label>
         Selección de Facultad:
-        <select className="select" value={seleccionFacultades} onChange={handleFacultadesChange}>
+        <select value={seleccionFacultades} onChange={handleFacultadesChange}>
           <option value="">Seleccionar</option>
           {opcionesFacultades.map((opcion) => (
             <option key={opcion} value={opcion}>
@@ -74,12 +94,12 @@ const DropdownsDinamicos = () => {
           ))}
         </select>
       </label>
-<br/>
+
       {seleccionFacultades && (
         <>
         <label>
-          Selección Carrera:x
-          <select className="select"  value={seleccionCarreras} onChange={handleCarrerasChange}>
+          Selección Carrera:
+          <select value={seleccionCarreras} onChange={handleCarrerasChange}>
             <option value="">Seleccionar</option>
             {opcionesCarreras[seleccionFacultades].map((opcion) => (
               <option key={opcion} value={opcion}>
@@ -88,10 +108,10 @@ const DropdownsDinamicos = () => {
             ))}
           </select>
         </label>
-        <br/>
+
         <label>
             Tipo de Evaluación:
-            <select className="select" value={seleccionArea} onChange={handleAreaChange}>
+            <select value={seleccionArea} onChange={handleAreaChange}>
               <option value="">Seleccionar</option>
               {opcionesArea.map((opcion) => (
                 <option key={opcion} value={opcion}>
@@ -108,7 +128,7 @@ const DropdownsDinamicos = () => {
       <button className="Atras-button">Atras</button>
     </Link>
 <Link to="/tabla">
-      <button className="App-button" disabled={!isBotonHabilitado}>Llenar</button>
+      <button className="App-button" onClick={setLocalStorage} disabled={!isBotonHabilitado}>Llenar</button>
     </Link>
 <br></br>
     </div>
