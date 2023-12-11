@@ -60,12 +60,9 @@ const Tabla = () => {
   const range = (n) => Array.from({ length: n }, (_, i) => i);
 
   useEffect(() => {
-    // Recuperar información del localStorage
     const storedSelection = JSON.parse(localStorage.getItem('seleccion'));
 
-    // Verificar si hay información almacenada
     if (storedSelection) {
-      // Actualizar el estado con la información del localStorage
       setInfoLocal({
         facultad: storedSelection.facultad,
         carrera: storedSelection.carrera,
