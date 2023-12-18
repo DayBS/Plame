@@ -110,9 +110,13 @@ const Tabla = () => {
       setData((prevData) => [...prevData, seleccion]);
     }
   
-    localStorage.setItem('data', JSON.stringify(data));
     
 };
+
+useEffect(() => {
+  // Guardar en localStorage después de cada actualización de "data"
+  localStorage.setItem('data', JSON.stringify(data));
+}, [data]);
 
 
   
