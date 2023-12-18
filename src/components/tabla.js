@@ -5,17 +5,17 @@ import '../styles/tabla.css';
 const Tabla = () => {
   const [plam, setPlam] = useState({
     matriz: [
-      ["DIMENSIÓN", "OBJETIVO", "PRODUCTO", "N°", "INDICADOR", "VALIDEZ INDICADOR"],
-      ["NORMAS JURÍDICAS INSTITUCIONALES", [""], [""], [""], [""], [""]],
-      ["MISIÓN Y OBJETIVO", [""], [""], [""], [""], [""]],
-      ["CURRÍCULO", [""], [""], [""], [""], [""], [""]],
-      ["ADMINISTRACIÓN Y GESTIÓN ACADÉMICA", [""], [""], [""], [""], [""]],
-      ["DOCENTES", [""], [""], [""], [""], [""]],
-      ["ESTUDIANTES", [""], [""], [""], [""], [""]],
-      ["INVESTIGACIÓN E INTERACCIÓN SOCIAL", [""], [""], [""], [""], [""]],
-      ["RECURSOS EDUCATIVOS", [""], [""], [""], [""], [""]],
-      ["ADMINISTRATIVOS FINANCIEROS", [""], [""], [""], [""], [""]],
-      ["INFRAESTRUCTURA", [""], [""], [""], [""], [""]],
+      ["DIMENSIÓN", "OBJETIVO", "PRODUCTO", "ACTIVIDADES", "INDICADOR", "VALIDEZ INDICADOR", "RESULTADO ALCANZADO", "COSTO ESPERADO", "COSTO ALCANZADO", "TIEMPO ESPERADO", "TIEMPO ALCANZADO"],
+      ["NORMAS JURÍDICAS INSTITUCIONALES", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["MISIÓN Y OBJETIVO", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["CURRÍCULO", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["ADMINISTRACIÓN Y GESTIÓN ACADÉMICA", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["DOCENTES", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["ESTUDIANTES", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["INVESTIGACIÓN E INTERACCIÓN SOCIAL", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["RECURSOS EDUCATIVOS", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["ADMINISTRATIVOS FINANCIEROS", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]],
+      ["INFRAESTRUCTURA", [""], [""], [""], [""], [""], [0], [0], [0], [0], [0]]
     ],
     dinamicos: Array.from({ length: 11 }, () => 1)
   });
@@ -26,10 +26,8 @@ const Tabla = () => {
     area: '',
   });
 
-  const [indiceFilas, setIndiceFilas] = useState(
-    // Establecer el estado inicial del índice de filas con la cantidad inicial de filas en la matriz
-    plam.matriz.slice(1).reduce((total, row) => total + row[1].length, 0)
-  );
+
+  const [data, setData] = useState([]);
 
   const addObj = (dim) => {
     const newDinamicos = [...plam.dinamicos];
@@ -39,9 +37,12 @@ const Tabla = () => {
     for (let i = 1; i <= 5; i++) {
       newMatriz[dim][i].push("");
     }
+    for (let i = 6; i <= 10; i++) {
+      newMatriz[dim][i].push(0);
+    }
 
     setPlam({ matriz: newMatriz, dinamicos: newDinamicos });
-    setIndiceFilas(indiceFilas + 1);
+    
   };
 
   const subtractObj = (dim) => {
@@ -49,15 +50,17 @@ const Tabla = () => {
     newDinamicos[dim] -= 1;
 
     const newMatriz = [...plam.matriz];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 10; i++) {
       newMatriz[dim][i].pop();
     }
 
     setPlam({ matriz: newMatriz, dinamicos: newDinamicos });
-    setIndiceFilas(indiceFilas - 1);
+    console.log(plam.matriz);
   };
 
   const range = (n) => Array.from({ length: n }, (_, i) => i);
+
+  
 
   useEffect(() => {
     const storedSelection = JSON.parse(localStorage.getItem('seleccion'));
@@ -68,9 +71,51 @@ const Tabla = () => {
         carrera: storedSelection.carrera,
         area: storedSelection.area,
       });
+
+      const storedData = localStorage.getItem('data');
+
+      if (!storedData) {
+        localStorage.setItem('data', JSON.stringify([]));
+        setData([]);
+      } else {
+        setData(JSON.parse(storedData));
+      }
     }
   }, []);
 
+  const setLocalStorage = () => {
+      
+    const seleccion = {
+      facultad: infoLocal.facultad,
+      carrera: infoLocal.carrera,
+      area: infoLocal.area,
+      matriz: plam.matriz,
+      dinamicos: plam.dinamicos
+    };
+    
+    const existingIndex = data.findIndex(
+      (entry) =>
+        entry.facultad === seleccion.facultad &&
+        entry.carrera === seleccion.carrera &&
+        entry.area === seleccion.area
+    );
+    
+    if (existingIndex !== -1) {
+      // Si existe, sobrescribir el objeto existente
+      const newData = [...data];
+      newData[existingIndex] = seleccion;
+      setData(newData);
+    } else {
+      // Si no existe, agregar el nuevo objeto al array
+      setData((prevData) => [...prevData, seleccion]);
+    }
+  
+    localStorage.setItem('data', JSON.stringify(data));
+    
+};
+
+
+  
   return (
     <div className='tabla'>
       <Link to="/">
@@ -108,12 +153,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea 
                     type="text"
                     value={plam.matriz[1][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[1][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[1][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[1][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -138,12 +196,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[2][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[2][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[2][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[2][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -168,12 +239,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[3][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[3][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[3][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[3][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -198,12 +282,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[4][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[4][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[4][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[4][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -228,12 +325,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[5][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[5][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[5][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[5][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -258,12 +368,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[6][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[6][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[6][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[6][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -288,12 +411,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[7][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[7][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[7][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[7][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -318,12 +454,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[8][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[8][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[8][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[8][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -348,12 +497,25 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[9][colIndex + 1][rowIndex]}
                     onChange={(e) => {
                       const newMatriz = [...plam.matriz];
                       newMatriz[9][colIndex + 1][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[9][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[9][colIndex + 6][rowIndex] = e.target.value;
                       setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
                     }}
                   />
@@ -378,7 +540,7 @@ const Tabla = () => {
               )}
               {range(5).map((colIndex) => (
                 <td key={colIndex}>
-                  <input
+                  <textarea
                     type="text"
                     value={plam.matriz[10][colIndex + 1][rowIndex]}
                     onChange={(e) => {
@@ -389,10 +551,27 @@ const Tabla = () => {
                   />
                 </td>
               ))}
+              {range(5).map((colIndex) => (
+                <td key={colIndex}>
+                  <input
+                    type="number"
+                    value={plam.matriz[10][colIndex + 6][rowIndex]}
+                    onChange={(e) => {
+                      const newMatriz = [...plam.matriz];
+                      newMatriz[10][colIndex + 6][rowIndex] = e.target.value;
+                      setPlam({ matriz: newMatriz, dinamicos: plam.dinamicos });
+                    }}
+                  />
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
       </table>
+
+        <button className="App-button" onClick={setLocalStorage}>Confirmar</button>
+
+
     </div>
   );
 };

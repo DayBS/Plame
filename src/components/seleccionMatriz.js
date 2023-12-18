@@ -34,7 +34,7 @@ const DropdownsDinamicos = () => {
     'Facultad de Desarrollo Rural y Territorial':['Técnico Superior en Agronomía','Licenciatura en Producción Agraria y Desarrollo Territorial'],  
      
   }; 
-  const opcionesArea = ['CEUB', 'ARCU-SUR', 'Personalizado' ];
+  const opcionesArea = ['CEUB', 'ARCU-SUR'];
 
   const [seleccionFacultades, setSeleccionFacultades] = useState('');
   const [seleccionCarreras, setSeleccionCarreras] = useState('');
