@@ -1,0 +1,22 @@
+directories:
+  output: dist
+  buildResources: assets
+appId: com.yourapp.id
+extends: null
+files:
+  - filter:
+      - build/**/*
+      - node_modules/**/*
+      - public/**/*
+      - src/**/*
+      - package.json
+      - main.js
+asar: true
+win:
+  target: nsis
+  sign: null
+mac:
+  target: dmg
+linux:
+  target: AppImage
+electronVersion: 28.0.0
